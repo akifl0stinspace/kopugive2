@@ -73,30 +73,28 @@ $pageTitle = 'Stripe Transactions';
     <?php include 'includes/admin_styles.php'; ?>
 </head>
 <body>
-    <div class="d-flex">
-        <?php include 'includes/admin_sidebar.php'; ?>
-        
-        <div class="flex-grow-1">
-            <div class="container-fluid p-4">
-                <!-- Header -->
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div>
-                        <h2 class="fw-bold mb-1">
-                            <i class="fas fa-credit-card text-primary me-2"></i>Stripe Transactions
-                        </h2>
-                        <p class="text-muted mb-0">Monitor and manage Stripe payments</p>
-                    </div>
-                    <a href="https://dashboard.stripe.com/payments" target="_blank" class="btn btn-primary">
-                        <i class="fas fa-external-link-alt me-2"></i>Open Stripe Dashboard
-                    </a>
-                </div>
+    <?php include 'includes/admin_sidebar.php'; ?>
+    
+    <main class="col-md-10 ms-sm-auto px-md-4 py-4">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold mb-1">
+                    <i class="fas fa-credit-card text-primary me-2"></i>Stripe Transactions
+                </h2>
+                <p class="text-muted mb-0">Monitor and manage Stripe payments</p>
+            </div>
+            <a href="https://dashboard.stripe.com/payments" target="_blank" class="btn btn-primary">
+                <i class="fas fa-external-link-alt me-2"></i>Open Stripe Dashboard
+            </a>
+        </div>
 
-                <!-- Statistics Cards -->
-                <div class="row g-3 mb-4">
-                    <div class="col-md-3">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
+        <!-- Statistics Cards -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <p class="text-muted mb-1">Total Transactions</p>
                                         <h3 class="fw-bold mb-0"><?= number_format($stats['total']) ?></h3>
@@ -277,9 +275,7 @@ $pageTitle = 'Stripe Transactions';
                     <strong>Note:</strong> This page shows only Stripe-processed transactions. For manual donations (cash), check the regular Donations page.
                     View detailed transaction information in your <a href="https://dashboard.stripe.com" target="_blank">Stripe Dashboard</a>.
                 </div>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
