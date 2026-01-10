@@ -40,7 +40,7 @@ $totalRaised = $stmt->fetch()['total'] ?? 0;
     <?php include 'includes/theme_styles.php'; ?>
     <style>
         .hero-section {
-            background: #800020;
+            background: linear-gradient(135deg, #850E35 0%, #EE6983 100%);
             color: white;
             padding: 5rem 0;
         }
@@ -57,14 +57,15 @@ $totalRaised = $stmt->fetch()['total'] ?? 0;
         .stat-box {
             padding: 2rem;
             background: white;
-            border-radius: 8px;
-            box-shadow: var(--shadow-sm);
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(133, 14, 53, 0.08);
             transition: all 0.3s ease;
-            border-left: 4px solid #800020;
+            border-left: 4px solid #850E35;
         }
         .stat-box:hover {
             transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 4px 10px rgba(133, 14, 53, 0.12);
+            border-left-color: #EE6983;
         }
         .navbar-brand {
             font-weight: bold;
@@ -83,21 +84,21 @@ $totalRaised = $stmt->fetch()['total'] ?? 0;
             scroll-behavior: smooth;
             padding: 10px 0 20px;
             scrollbar-width: thin;
-            scrollbar-color: #800020 #f1f1f1;
+            scrollbar-color: #FFC4C4 #FCF5EE;
         }
         .campaign-slider::-webkit-scrollbar {
             height: 8px;
         }
         .campaign-slider::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: #FCF5EE;
             border-radius: 10px;
         }
         .campaign-slider::-webkit-scrollbar-thumb {
-            background: #800020;
+            background: #FFC4C4;
             border-radius: 10px;
         }
         .campaign-slider::-webkit-scrollbar-thumb:hover {
-            background: #600018;
+            background: #EE6983;
         }
         .campaign-slide {
             min-width: 350px;
@@ -108,19 +109,19 @@ $totalRaised = $stmt->fetch()['total'] ?? 0;
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: #800020;
+            background: #850E35;
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             cursor: pointer;
             z-index: 10;
             transition: all 0.3s;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 10px rgba(133, 14, 53, 0.3);
         }
         .slider-btn:hover {
-            background: #600018;
+            background: #EE6983;
             transform: translateY(-50%) scale(1.1);
         }
         .slider-btn-prev {
