@@ -23,6 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Please fill in all required fields';
     } elseif ($targetAmount <= 0) {
         $error = 'Target amount must be greater than 0';
+    } elseif (strtotime($startDate) < strtotime('today')) {
+        $error = 'Start date cannot be in the past';
+    } elseif (strtotime($endDate) < strtotime('today')) {
+        $error = 'End date cannot be in the past';
     } elseif (strtotime($endDate) < strtotime($startDate)) {
         $error = 'End date must be after start date';
     } else {
@@ -160,13 +164,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-md-6 mb-3">
                                     <label for="start_date" class="form-label">Start Date *</label>
                                     <input type="date" class="form-control" id="start_date" name="start_date" 
+                                           min="<?= date('Y-m-d') ?>"
                                            value="<?= htmlspecialchars($_POST['start_date'] ?? '') ?>" required>
+                                    <small class="text-muted">Cannot select past dates</small>
                                 </div>
                                 
                                 <div class="col-md-6 mb-3">
                                     <label for="end_date" class="form-label">End Date *</label>
                                     <input type="date" class="form-control" id="end_date" name="end_date" 
+                                           min="<?= date('Y-m-d') ?>"
                                            value="<?= htmlspecialchars($_POST['end_date'] ?? '') ?>" required>
+                                    <small class="text-muted">Cannot select past dates</small>
                                 </div>
                             </div>
                             
