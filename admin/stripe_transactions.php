@@ -125,13 +125,13 @@ $pageTitle = 'Stripe Transactions';
                         <div class="card border-0 shadow-sm">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <p class="text-muted mb-1">Pending</p>
-                                        <h3 class="fw-bold mb-0 text-warning"><?= number_format($stats['pending']) ?></h3>
-                                    </div>
-                                    <div class="bg-warning bg-opacity-10 p-3 rounded">
-                                        <i class="fas fa-clock fa-2x text-warning"></i>
-                                    </div>
+                    <div>
+                        <p class="text-muted mb-1">Unsuccessful</p>
+                        <h3 class="fw-bold mb-0 text-danger"><?= number_format($stats['pending']) ?></h3>
+                    </div>
+                    <div class="bg-danger bg-opacity-10 p-3 rounded">
+                        <i class="fas fa-times-circle fa-2x text-danger"></i>
+                    </div>
                                 </div>
                             </div>
                         </div>
@@ -161,10 +161,8 @@ $pageTitle = 'Stripe Transactions';
                                 <label class="form-label">Status</label>
                                 <select name="status" class="form-select">
                                     <option value="all" <?= $status === 'all' ? 'selected' : '' ?>>All Status</option>
-                                    <option value="paid" <?= $status === 'paid' ? 'selected' : '' ?>>Paid</option>
-                                    <option value="pending" <?= $status === 'pending' ? 'selected' : '' ?>>Pending</option>
-                                    <option value="failed" <?= $status === 'failed' ? 'selected' : '' ?>>Failed</option>
-                                    <option value="refunded" <?= $status === 'refunded' ? 'selected' : '' ?>>Refunded</option>
+                                    <option value="paid" <?= $status === 'paid' ? 'selected' : '' ?>>Successful</option>
+                                    <option value="pending" <?= $status === 'pending' ? 'selected' : '' ?>>Unsuccessful</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
