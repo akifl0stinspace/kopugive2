@@ -16,7 +16,6 @@ $stmt = $db->query("
     WHERE c.status = 'active' AND c.end_date >= CURDATE()
     GROUP BY c.campaign_id
     ORDER BY c.end_date ASC, c.created_at DESC
-    LIMIT 6
 ");
 $campaigns = $stmt->fetchAll();
 
@@ -70,6 +69,77 @@ $totalRaised = $stmt->fetch()['total'] ?? 0;
         .navbar-brand {
             font-weight: bold;
             font-size: 1.5rem;
+        }
+        
+        /* Campaign Slider Styles */
+        .campaign-slider-container {
+            position: relative;
+            padding: 0 50px;
+        }
+        .campaign-slider {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 10px 0 20px;
+            scrollbar-width: thin;
+            scrollbar-color: #800020 #f1f1f1;
+        }
+        .campaign-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+        .campaign-slider::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .campaign-slider::-webkit-scrollbar-thumb {
+            background: #800020;
+            border-radius: 10px;
+        }
+        .campaign-slider::-webkit-scrollbar-thumb:hover {
+            background: #600018;
+        }
+        .campaign-slide {
+            min-width: 350px;
+            max-width: 350px;
+            flex-shrink: 0;
+        }
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #800020;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .slider-btn:hover {
+            background: #600018;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .slider-btn-prev {
+            left: 0;
+        }
+        .slider-btn-next {
+            right: 0;
+        }
+        @media (max-width: 768px) {
+            .campaign-slide {
+                min-width: 280px;
+                max-width: 280px;
+            }
+            .campaign-slider-container {
+                padding: 0 10px;
+            }
+            .slider-btn {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -177,45 +247,55 @@ $totalRaised = $stmt->fetch()['total'] ?? 0;
                     <p class="text-muted">No active campaigns at the moment</p>
                 </div>
             <?php else: ?>
-                <div class="row g-4">
-                    <?php foreach ($campaigns as $campaign): ?>
-                        <?php $percentage = calculatePercentage($campaign['total_raised'], $campaign['target_amount']); ?>
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card campaign-card h-100">
-                                <?php if ($campaign['banner_image']): ?>
-                                    <img src="<?= htmlspecialchars($campaign['banner_image']) ?>" class="card-img-top campaign-image" alt="Campaign">
-                                <?php else: ?>
-                                    <div class="campaign-image d-flex align-items-center justify-content-center text-white">
-                                        <i class="fas fa-image fa-3x"></i>
-                                    </div>
-                                <?php endif; ?>
-                                
-                                <div class="card-body">
-                                    <span class="badge bg-primary mb-2"><?= ucfirst($campaign['category']) ?></span>
-                                    <h5 class="card-title"><?= htmlspecialchars($campaign['campaign_name']) ?></h5>
-                                    <p class="card-text text-muted small"><?= substr(htmlspecialchars($campaign['description']), 0, 100) ?>...</p>
+                <div class="campaign-slider-container">
+                    <button class="slider-btn slider-btn-prev" onclick="slideLeft()">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="campaign-slider" id="campaignSlider">
+                        <?php foreach ($campaigns as $campaign): ?>
+                            <?php $percentage = calculatePercentage($campaign['total_raised'], $campaign['target_amount']); ?>
+                            <div class="campaign-slide">
+                                <div class="card campaign-card h-100">
+                                    <?php if ($campaign['banner_image']): ?>
+                                        <img src="<?= htmlspecialchars($campaign['banner_image']) ?>" class="card-img-top campaign-image" alt="Campaign">
+                                    <?php else: ?>
+                                        <div class="campaign-image d-flex align-items-center justify-content-center text-white">
+                                            <i class="fas fa-image fa-3x"></i>
+                                        </div>
+                                    <?php endif; ?>
                                     
-                                    <div class="mb-3">
-                                        <div class="d-flex justify-content-between mb-1">
-                                            <small class="fw-bold text-success"><?= formatCurrency($campaign['total_raised']) ?></small>
-                                            <small class="text-muted">of <?= formatCurrency($campaign['target_amount']) ?></small>
+                                    <div class="card-body">
+                                        <span class="badge bg-primary mb-2"><?= ucfirst($campaign['category']) ?></span>
+                                        <h5 class="card-title"><?= htmlspecialchars($campaign['campaign_name']) ?></h5>
+                                        <p class="card-text text-muted small"><?= substr(htmlspecialchars($campaign['description']), 0, 100) ?>...</p>
+                                        
+                                        <div class="mb-3">
+                                            <div class="d-flex justify-content-between mb-1">
+                                                <small class="fw-bold text-success"><?= formatCurrency($campaign['total_raised']) ?></small>
+                                                <small class="text-muted">of <?= formatCurrency($campaign['target_amount']) ?></small>
+                                            </div>
+                                            <div class="progress" style="height: 8px;">
+                                                <div class="progress-bar bg-success" style="width: <?= $percentage ?>%"></div>
+                                            </div>
+                                            <div class="d-flex justify-content-between mt-1">
+                                                <small class="text-muted"><?= $percentage ?>% funded</small>
+                                                <small class="text-muted"><?= $campaign['donation_count'] ?> donors</small>
+                                            </div>
                                         </div>
-                                        <div class="progress" style="height: 8px;">
-                                            <div class="progress-bar bg-success" style="width: <?= $percentage ?>%"></div>
-                                        </div>
-                                        <div class="d-flex justify-content-between mt-1">
-                                            <small class="text-muted"><?= $percentage ?>% funded</small>
-                                            <small class="text-muted"><?= $campaign['donation_count'] ?> donors</small>
-                                        </div>
+                                        
+                                        <a href="donor/campaign_view.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-primary w-100">
+                                            <i class="fas fa-hand-holding-heart me-2"></i>Donate Now
+                                        </a>
                                     </div>
-                                    
-                                    <a href="donor/campaign_view.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-primary w-100">
-                                        <i class="fas fa-hand-holding-heart me-2"></i>Donate Now
-                                    </a>
                                 </div>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    </div>
+                    
+                    <button class="slider-btn slider-btn-next" onclick="slideRight()">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             <?php endif; ?>
         </div>
@@ -253,6 +333,23 @@ $totalRaised = $stmt->fetch()['total'] ?? 0;
     </footer>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function slideLeft() {
+            const slider = document.getElementById('campaignSlider');
+            slider.scrollBy({
+                left: -380,
+                behavior: 'smooth'
+            });
+        }
+        
+        function slideRight() {
+            const slider = document.getElementById('campaignSlider');
+            slider.scrollBy({
+                left: 380,
+                behavior: 'smooth'
+            });
+        }
+    </script>
 </body>
 </html>
 
