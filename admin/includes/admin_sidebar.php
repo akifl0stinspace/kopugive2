@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
-        <nav class="col-md-2 d-md-block sidebar p-3 position-fixed">
+        <nav class="col-md-2 d-md-block sidebar p-3 position-fixed d-flex flex-column" style="height: 100vh; overflow-y: auto;">
             <div class="text-center mb-4">
                 <h4><i class="fas fa-hand-holding-heart"></i> KopuGive</h4>
                 <small class="text-muted">Admin Panel</small>
@@ -9,7 +9,7 @@
             
             <hr>
             
-            <ul class="nav flex-column">
+            <ul class="nav flex-column flex-grow-1">
                 <li class="nav-item">
                     <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : '' ?>" href="dashboard.php">
                         <i class="fas fa-chart-line"></i> Dashboard
@@ -47,9 +47,9 @@
                 </li>
             </ul>
             
-            <hr class="mt-auto">
+            <hr>
             
-            <div class="mt-auto">
+            <div class="mt-2">
                 <div class="mb-2 text-muted">
                     <i class="fas fa-user-circle me-2"></i>
                     <small><?= htmlspecialchars($_SESSION['full_name']) ?></small>
