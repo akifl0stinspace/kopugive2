@@ -9,6 +9,9 @@ if (!isLoggedIn() || !isAdmin()) {
 
 $db = (new Database())->getConnection();
 
+// Auto-close campaigns that have ended
+$db->exec("UPDATE campaigns SET status = 'closed' WHERE status IN ('active', 'draft') AND end_date < CURDATE()");
+
 // Handle campaign actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] === 'update_status' && isset($_POST['campaign_id'], $_POST['status'])) {
@@ -16,6 +19,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $stmt->execute([$_POST['status'], $_POST['campaign_id']]);
         logActivity($db, $_SESSION['user_id'], 'Campaign status updated', 'campaign', $_POST['campaign_id']);
         setFlashMessage('success', 'Campaign status updated successfully');
+        redirect('campaigns.php');
+    }
+    
+    if ($_POST['action'] === 'delete' && isset($_POST['campaign_id'])) {
+        $campaignId = $_POST['campaign_id'];
+        
+        // Check if campaign is closed
+        $stmt = $db->prepare("SELECT status FROM campaigns WHERE campaign_id = ?");
+        $stmt->execute([$campaignId]);
+        $campaign = $stmt->fetch();
+        
+        if ($campaign && $campaign['status'] === 'closed') {
+            // Delete related records first (donations will be cascade deleted by foreign key)
+            $stmt = $db->prepare("DELETE FROM campaign_documents WHERE campaign_id = ?");
+            $stmt->execute([$campaignId]);
+            
+            $stmt = $db->prepare("DELETE FROM campaign_updates WHERE campaign_id = ?");
+            $stmt->execute([$campaignId]);
+            
+            // Delete the campaign
+            $stmt = $db->prepare("DELETE FROM campaigns WHERE campaign_id = ?");
+            $stmt->execute([$campaignId]);
+            
+            logActivity($db, $_SESSION['user_id'], 'Campaign deleted', 'campaign', $campaignId);
+            setFlashMessage('success', 'Campaign deleted successfully');
+        } else {
+            setFlashMessage('danger', 'Only closed campaigns can be deleted');
+        }
         redirect('campaigns.php');
     }
 }
@@ -128,9 +159,18 @@ $flashMessage = getFlashMessage();
                                         <a href="campaign_view.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-sm btn-outline-info me-1" title="View">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="campaign_edit.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-sm btn-outline-primary" title="Edit">
+                                        <a href="campaign_edit.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-sm btn-outline-primary me-1" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
+                                        <?php if ($campaign['status'] === 'closed'): ?>
+                                            <form method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this campaign? This action cannot be undone!');">
+                                                <input type="hidden" name="action" value="delete">
+                                                <input type="hidden" name="campaign_id" value="<?= $campaign['campaign_id'] ?>">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
