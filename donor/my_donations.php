@@ -30,33 +30,13 @@ $donations = $stmt->fetchAll();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <?php include '../includes/theme_styles.php'; ?>
+    <?php include 'includes/donor_styles.php'; ?>
 </head>
-<body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="dashboard.php">
-                <i class="fas fa-hand-holding-heart me-2"></i>KopuGive
-            </a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.php">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="campaigns.php">Browse Campaigns</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="my_donations.php">My Donations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../auth/logout.php">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<body>
+    <?php include 'includes/donor_sidebar.php'; ?>
     
-    <div class="container my-5">
+    <main class="col-md-10 ms-sm-auto px-md-4 py-4">
+        <div class="container-fluid">
         <h2 class="mb-4"><i class="fas fa-history me-2"></i>My Donation History</h2>
         
         <?php if (empty($donations)): ?>
@@ -128,7 +108,8 @@ $donations = $stmt->fetchAll();
                 </div>
             </div>
         <?php endif; ?>
-    </div>
+        </div>
+    </main>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
