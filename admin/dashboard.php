@@ -27,10 +27,6 @@ $result = $stmt->fetch();
 $stats['total_donations'] = $result['total'] ?? 0;
 $stats['total_amount'] = $result['sum'] ?? 0;
 
-// Pending donations
-$stmt = $db->query("SELECT COUNT(*) as total FROM donations WHERE status = 'pending'");
-$stats['pending_donations'] = $stmt->fetch()['total'];
-
 // Total donors
 $stmt = $db->query("SELECT COUNT(DISTINCT donor_id) as total FROM donations WHERE donor_id IS NOT NULL");
 $stats['total_donors'] = $stmt->fetch()['total'];
@@ -94,7 +90,7 @@ $flashMessage = getFlashMessage();
                 
                 <!-- Statistics Cards -->
                 <div class="row g-3 mb-4">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card stat-card border-primary">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -111,7 +107,7 @@ $flashMessage = getFlashMessage();
                         </div>
                     </div>
                     
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card stat-card border-success">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -128,24 +124,7 @@ $flashMessage = getFlashMessage();
                         </div>
                     </div>
                     
-                    <div class="col-md-3">
-                        <div class="card stat-card border-warning">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="text-muted">Pending</h6>
-                                        <h3 class="mb-0"><?= $stats['pending_donations'] ?></h3>
-                                        <small class="text-warning">Awaiting verification</small>
-                                    </div>
-                                    <div class="text-warning">
-                                        <i class="fas fa-clock fa-3x opacity-25"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="card stat-card border-info">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
