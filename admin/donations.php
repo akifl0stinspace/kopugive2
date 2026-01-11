@@ -59,8 +59,13 @@ $query = "
 $params = [];
 
 if ($status !== 'all') {
-    $query .= " AND d.status = :status";
-    $params[':status'] = $status;
+    if ($status === 'unsuccessful') {
+        // Show both pending and rejected as unsuccessful
+        $query .= " AND d.status IN ('pending', 'rejected')";
+    } else {
+        $query .= " AND d.status = :status";
+        $params[':status'] = $status;
+    }
 }
 
 if (!empty($search)) {
@@ -108,9 +113,8 @@ $flashMessage = getFlashMessage();
                     <div class="col-md-6">
                         <div class="btn-group" role="group">
                             <a href="?status=all<?= !empty($search) ? '&search=' . urlencode($search) : '' ?>" class="btn btn-<?= $status === 'all' ? 'primary' : 'outline-primary' ?>">All</a>
-                            <a href="?status=pending<?= !empty($search) ? '&search=' . urlencode($search) : '' ?>" class="btn btn-<?= $status === 'pending' ? 'warning' : 'outline-warning' ?>">Pending</a>
-                            <a href="?status=verified<?= !empty($search) ? '&search=' . urlencode($search) : '' ?>" class="btn btn-<?= $status === 'verified' ? 'success' : 'outline-success' ?>">Verified</a>
-                            <a href="?status=rejected<?= !empty($search) ? '&search=' . urlencode($search) : '' ?>" class="btn btn-<?= $status === 'rejected' ? 'danger' : 'outline-danger' ?>">Rejected</a>
+                            <a href="?status=verified<?= !empty($search) ? '&search=' . urlencode($search) : '' ?>" class="btn btn-<?= $status === 'verified' ? 'success' : 'outline-success' ?>">Successful</a>
+                            <a href="?status=unsuccessful<?= !empty($search) ? '&search=' . urlencode($search) : '' ?>" class="btn btn-<?= $status === 'unsuccessful' ? 'danger' : 'outline-danger' ?>">Unsuccessful</a>
                         </div>
                     </div>
                     <div class="col-md-6">
