@@ -23,46 +23,12 @@ $donors = $stmt->fetchAll();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <?php include 'includes/admin_styles.php'; ?>
-    </head>
+</head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <nav class="col-md-2 d-md-block sidebar text-white p-3">
-                <div class="text-center mb-4">
-                    <h4><i class="fas fa-hand-holding-heart"></i> KopuGive</h4>
-                    <small>Admin Panel</small>
-                </div>
-                <hr class="text-white">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" href="dashboard.php"><i class="fas fa-chart-line me-2"></i> Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="campaigns.php"><i class="fas fa-bullhorn me-2"></i> Campaigns</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="donations.php"><i class="fas fa-hand-holding-usd me-2"></i> Donations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="donors.php"><i class="fas fa-users me-2"></i> Donors</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="reports.php"><i class="fas fa-file-alt me-2"></i> Reports</a>
-                    </li>
-                </ul>
-                <hr class="text-white mt-auto">
-                <div class="mt-auto">
-                    <div class="mb-2">
-                        <i class="fas fa-user-circle me-2"></i>
-                        <small><?= htmlspecialchars($_SESSION['full_name']) ?></small>
-                    </div>
-                    <a href="../auth/logout.php" class="btn btn-outline-light btn-sm w-100"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
-                </div>
-            </nav>
+    <?php include 'includes/admin_sidebar.php'; ?>
 
-            <!-- Main content -->
-            <main class="col-md-10 ms-sm-auto px-md-4 py-4" style="margin-left: 16.666667%;">
+    <!-- Main content -->
+    <main class="col-md-10 ms-sm-auto px-md-4 py-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Donors</h2>
                     <span class="text-muted"><?= count($donors) ?> total</span>
