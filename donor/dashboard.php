@@ -53,51 +53,14 @@ $flashMessage = getFlashMessage();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <?php include '../includes/theme_styles.php'; ?>
+    <?php include 'includes/donor_styles.php'; ?>
 </head>
-<body class="bg-light">
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="dashboard.php">
-                <i class="fas fa-hand-holding-heart me-2"></i>KopuGive
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="dashboard.php">
-                            <i class="fas fa-tachometer-alt me-1"></i>Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="campaigns.php">
-                            <i class="fas fa-bullhorn me-1"></i>Browse Campaigns
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="my_donations.php">
-                            <i class="fas fa-history me-1"></i>My Donations
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle me-1"></i><?= htmlspecialchars($_SESSION['full_name']) ?>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="profile.php"><i class="fas fa-user me-2"></i>Profile</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="../auth/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<body>
+    <?php include 'includes/donor_sidebar.php'; ?>
     
     <!-- Main Content -->
-    <div class="container my-5">
+    <main class="col-md-10 ms-sm-auto px-md-4 py-4">
+        <div class="container-fluid">
         <!-- Welcome Banner -->
         <div class="card border-0 shadow-sm mb-4 welcome-banner">
             <div class="card-body p-4">
@@ -238,7 +201,8 @@ $flashMessage = getFlashMessage();
                 </div>
             </div>
         </div>
-    </div>
+        </div>
+    </main>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

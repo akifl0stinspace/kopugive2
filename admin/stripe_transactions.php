@@ -254,7 +254,7 @@ $pageTitle = 'Stripe Transactions';
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    <a href="../donor/my_donations.php?id=<?= $txn['donation_id'] ?>" class="btn btn-sm btn-outline-primary" title="View Details">
+                                                    <a href="donations.php" class="btn btn-sm btn-outline-primary" title="View in Donations">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
                                                 </td>
