@@ -14,9 +14,11 @@ ini_set('error_log', __DIR__ . '/../logs/php_errors.log');
 date_default_timezone_set('Asia/Kuala_Lumpur');
 
 // Session Configuration
-ini_set('session.cookie_httponly', 1);
-ini_set('session.use_only_cookies', 1);
-ini_set('session.cookie_secure', 0); // Set to 1 if using HTTPS
+// Note: These settings must be set before session_start() is called
+// They are handled in individual page files before session_start()
+// ini_set('session.cookie_httponly', 1);
+// ini_set('session.use_only_cookies', 1);
+// ini_set('session.cookie_secure', 0);
 
 // Application Settings
 define('APP_NAME', 'KopuGive');
