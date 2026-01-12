@@ -24,24 +24,23 @@ $query = "
     WHERE c.status = 'active' AND c.end_date >= CURDATE()
 ";
 
+$params = [];
+
 if ($category !== 'all') {
-    $query .= " AND c.category = :category";
+    $query .= " AND c.category = ?";
+    $params[] = $category;
 }
 
 if (!empty($search)) {
-    $query .= " AND (c.campaign_name LIKE :search OR c.description LIKE :search)";
+    $query .= " AND (c.campaign_name LIKE ? OR c.description LIKE ?)";
+    $params[] = '%' . $search . '%';
+    $params[] = '%' . $search . '%';
 }
 
 $query .= " GROUP BY c.campaign_id ORDER BY c.end_date ASC, c.created_at DESC";
 
 $stmt = $db->prepare($query);
-if ($category !== 'all') {
-    $stmt->bindValue(':category', $category);
-}
-if (!empty($search)) {
-    $stmt->bindValue(':search', '%' . $search . '%');
-}
-$stmt->execute();
+$stmt->execute($params);
 $campaigns = $stmt->fetchAll();
 
 $flashMessage = getFlashMessage();
