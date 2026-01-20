@@ -285,7 +285,7 @@ $totalRaised = $stmt->fetch()['total'] ?? 0;
                                             </div>
                                         </div>
                                         
-                                        <a href="donor/campaign_view.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-primary w-100">
+                                        <a href="campaign.php?id=<?= $campaign['campaign_id'] ?>" class="btn btn-primary w-100">
                                             <i class="fas fa-hand-holding-heart me-2"></i>Donate Now
                                         </a>
                                     </div>
