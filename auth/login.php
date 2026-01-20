@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-10 col-lg-8">
                 <div class="card login-card">
                     <div class="row g-0">
-                        <div class="col-12 col-md-5 brand-section d-flex flex-column justify-content-center">
+                        <div class="col-12 col-md-5 brand-section d-flex flex-column justify-content-center" style="background: #850E35 !important; color: white !important;">
                             <h2 class="fw-bold mb-4"><i class="fas fa-hand-holding-heart me-2"></i>KopuGive</h2>
                             <p class="lead">MRSM Kota Putra Donation Management System</p>
                             <p class="small">Connecting hearts, building futures together.</p>
