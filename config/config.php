@@ -51,5 +51,9 @@ define('ITEMS_PER_PAGE', 10);
 define('CURRENCY', 'MYR');
 define('CURRENCY_SYMBOL', 'RM');
 
+// Email Settings
+define('SMTP_FROM_EMAIL', 'noreply@kopugive.com');
+define('SMTP_FROM_NAME', 'KopuGive - MRSM Kota Putra');
+
 // Include database config
 require_once __DIR__ . '/database.php';
