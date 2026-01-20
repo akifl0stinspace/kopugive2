@@ -12,7 +12,7 @@ $db = (new Database())->getConnection();
 
 // Get all successful donations without receipts
 $stmt = $db->query("
-    SELECT d.*, c.campaign_name, c.campaign_description, u.full_name, u.email
+    SELECT d.*, c.campaign_name, c.description as campaign_description, u.full_name, u.email
     FROM donations d
     LEFT JOIN campaigns c ON d.campaign_id = c.campaign_id
     LEFT JOIN users u ON d.donor_id = u.user_id
