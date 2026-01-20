@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 session_start();
 require_once '../config/config.php';
 require_once '../includes/functions.php';
@@ -207,22 +205,6 @@ $flashMessage = getFlashMessage();
                                         <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#donationModal<?= $donation['donation_id'] ?>" title="View Details">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <?php if ($donation['status'] === 'pending'): ?>
-                                            <form method="POST" class="d-inline">
-                                                <input type="hidden" name="action" value="verify">
-                                                <input type="hidden" name="donation_id" value="<?= $donation['donation_id'] ?>">
-                                                <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Verify this donation?')" title="Verify">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                            </form>
-                                            <form method="POST" class="d-inline">
-                                                <input type="hidden" name="action" value="reject">
-                                                <input type="hidden" name="donation_id" value="<?= $donation['donation_id'] ?>">
-                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Reject this donation?')" title="Reject">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                            </form>
-                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -303,22 +285,6 @@ $flashMessage = getFlashMessage();
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <?php if ($donation['status'] === 'pending'): ?>
-                                <form method="POST" class="d-inline">
-                                    <input type="hidden" name="action" value="verify">
-                                    <input type="hidden" name="donation_id" value="<?= $donation['donation_id'] ?>">
-                                    <button type="submit" class="btn btn-success" onclick="return confirm('Verify this donation?')">
-                                        <i class="fas fa-check me-2"></i>Verify Donation
-                                    </button>
-                                </form>
-                                <form method="POST" class="d-inline">
-                                    <input type="hidden" name="action" value="reject">
-                                    <input type="hidden" name="donation_id" value="<?= $donation['donation_id'] ?>">
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Reject this donation?')">
-                                        <i class="fas fa-times me-2"></i>Reject Donation
-                                    </button>
-                                </form>
-                            <?php endif; ?>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
