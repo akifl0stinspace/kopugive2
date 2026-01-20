@@ -72,9 +72,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .brand-section {
             background: var(--maroon-primary);
             color: white;
-            border-radius: 8px 0 0 8px;
+            border-radius: 8px 8px 0 0;
             padding: 3rem;
-            border-right: 2px solid var(--gold-primary);
+        }
+        @media (min-width: 768px) {
+            .brand-section {
+                border-radius: 8px 0 0 8px;
+                border-right: 2px solid var(--gold-primary);
+            }
         }
     </style>
 </head>
@@ -84,12 +89,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-10 col-lg-8">
                 <div class="card login-card">
                     <div class="row g-0">
-                        <div class="col-md-5 brand-section d-flex flex-column justify-content-center">
+                        <div class="col-12 col-md-5 brand-section d-flex flex-column justify-content-center">
                             <h2 class="fw-bold mb-4"><i class="fas fa-hand-holding-heart me-2"></i>KopuGive</h2>
                             <p class="lead">MRSM Kota Putra Donation Management System</p>
                             <p class="small">Connecting hearts, building futures together.</p>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-12 col-md-7">
                             <div class="card-body p-5">
                                 <h4 class="mb-4">Welcome Back!</h4>
                                 
