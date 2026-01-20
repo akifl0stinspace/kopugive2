@@ -3,6 +3,10 @@ session_start();
 require_once '../config/config.php';
 require_once '../includes/functions.php';
 
+if (!isLoggedIn()) {
+    redirect('../auth/login.php');
+}
+
 $db = (new Database())->getConnection();
 
 $campaignId = $_GET['id'] ?? 0;
