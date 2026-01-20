@@ -73,28 +73,28 @@ $pageTitle = 'Stripe Transactions';
     <?php include 'includes/admin_styles.php'; ?>
 </head>
 <body>
-    <?php include 'includes/admin_sidebar.php'; ?>
-    
+        <?php include 'includes/admin_sidebar.php'; ?>
+        
     <main class="col-md-10 ms-sm-auto px-md-4 py-4">
-        <!-- Header -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="fw-bold mb-1">
-                    <i class="fas fa-credit-card text-primary me-2"></i>Stripe Transactions
-                </h2>
-                <p class="text-muted mb-0">Monitor and manage Stripe payments</p>
-            </div>
-            <a href="https://dashboard.stripe.com/payments" target="_blank" class="btn btn-primary">
-                <i class="fas fa-external-link-alt me-2"></i>Open Stripe Dashboard
-            </a>
-        </div>
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2 class="fw-bold mb-1">
+                            <i class="fas fa-credit-card text-primary me-2"></i>Stripe Transactions
+                        </h2>
+                        <p class="text-muted mb-0">Monitor and manage Stripe payments</p>
+                    </div>
+                    <a href="https://dashboard.stripe.com/payments" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-external-link-alt me-2"></i>Open Stripe Dashboard
+                    </a>
+                </div>
 
-        <!-- Statistics Cards -->
-        <div class="row g-3 mb-4">
-            <div class="col-md-3">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
+                <!-- Statistics Cards -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <p class="text-muted mb-1">Total Transactions</p>
                                         <h3 class="fw-bold mb-0"><?= number_format($stats['total']) ?></h3>
@@ -125,13 +125,13 @@ $pageTitle = 'Stripe Transactions';
                         <div class="card border-0 shadow-sm">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-center">
-                    <div>
+                                    <div>
                         <p class="text-muted mb-1">Unsuccessful</p>
                         <h3 class="fw-bold mb-0 text-danger"><?= number_format($stats['pending']) ?></h3>
-                    </div>
+                                    </div>
                     <div class="bg-danger bg-opacity-10 p-3 rounded">
                         <i class="fas fa-times-circle fa-2x text-danger"></i>
-                    </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
