@@ -69,7 +69,7 @@ if ($status !== 'all') {
 }
 
 if (!empty($search)) {
-    $query .= " AND (d.donor_name LIKE :search OR d.donor_email LIKE :search OR c.campaign_name LIKE :search OR d.transaction_id LIKE :search)";
+    $query .= " AND (d.donor_name LIKE :search OR d.donor_email LIKE :search OR u.full_name LIKE :search OR u.email LIKE :search OR c.campaign_name LIKE :search OR d.transaction_id LIKE :search)";
     $params[':search'] = "%$search%";
 }
 
