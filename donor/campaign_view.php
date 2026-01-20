@@ -24,7 +24,7 @@ $campaign = $stmt->fetch();
 
 if (!$campaign) {
     setFlashMessage('error', 'Campaign not found');
-    redirect('campaigns.php');
+    redirect('../index.php');
 }
 
 // Get recent donations for this campaign
