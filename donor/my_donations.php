@@ -76,11 +76,11 @@ $donations = $stmt->fetchAll();
                                         <td><small><?= ucfirst(str_replace('_', ' ', $donation['payment_method'])) ?></small></td>
                                         <td>
                                             <?php if ($donation['receipt_path']): ?>
-                                                <div class="btn-group" role="group">
-                                                    <a href="../<?= htmlspecialchars($donation['receipt_path']) ?>" target="_blank" class="btn btn-sm btn-outline-primary" title="View Receipt">
+                                                <div class="btn-group btn-group-sm" role="group">
+                                                    <a href="../<?= htmlspecialchars($donation['receipt_path']) ?>" target="_blank" class="btn btn-outline-primary" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="View Receipt">
                                                         <i class="fas fa-eye"></i> View
                                                     </a>
-                                                    <a href="../<?= htmlspecialchars($donation['receipt_path']) ?>" download class="btn btn-sm btn-primary" title="Download Receipt">
+                                                    <a href="../<?= htmlspecialchars($donation['receipt_path']) ?>" download class="btn btn-primary" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" title="Download Receipt">
                                                         <i class="fas fa-download"></i> Download
                                                     </a>
                                                 </div>
