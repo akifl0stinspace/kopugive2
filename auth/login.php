@@ -70,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-top: 3px solid var(--maroon-primary);
         }
         .brand-section {
-            background: var(--white);
-            color: var(--maroon-primary);
+            background: var(--maroon-primary);
+            color: white;
             border-radius: 8px 0 0 8px;
             padding: 3rem;
             border-right: 2px solid var(--gold-primary);
