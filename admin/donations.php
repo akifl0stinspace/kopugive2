@@ -65,14 +65,20 @@ if ($status !== 'all') {
         // Show both pending and rejected as unsuccessful
         $query .= " AND d.status IN ('pending', 'rejected')";
     } else {
-        $query .= " AND d.status = :status";
-        $params[':status'] = $status;
+        $query .= " AND d.status = ?";
+        $params[] = $status;
     }
 }
 
 if (!empty($search)) {
-    $query .= " AND (d.donor_name LIKE :search OR d.donor_email LIKE :search OR u.full_name LIKE :search OR u.email LIKE :search OR c.campaign_name LIKE :search OR d.transaction_id LIKE :search)";
-    $params[':search'] = "%$search%";
+    $searchTerm = "%$search%";
+    $query .= " AND (d.donor_name LIKE ? OR d.donor_email LIKE ? OR u.full_name LIKE ? OR u.email LIKE ? OR c.campaign_name LIKE ? OR d.transaction_id LIKE ?)";
+    $params[] = $searchTerm;
+    $params[] = $searchTerm;
+    $params[] = $searchTerm;
+    $params[] = $searchTerm;
+    $params[] = $searchTerm;
+    $params[] = $searchTerm;
 }
 
 $query .= " ORDER BY d.created_at DESC";
