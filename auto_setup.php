@@ -179,6 +179,21 @@ try {
               </div>";
     }
     
+    // Migration 005: Super admin role
+    $migration5 = file_get_contents(__DIR__ . '/database/migrations/005_add_super_admin_role.sql');
+    try {
+        $conn->exec($migration5);
+        echo "<div class='step alert alert-success'>
+                <i class='fas fa-check'></i>
+                <strong>Migration 005:</strong> Super admin role added
+              </div>";
+    } catch (PDOException $e) {
+        echo "<div class='step alert alert-info'>
+                <i class='fas fa-info-circle'></i>
+                <strong>Migration 005:</strong> Already applied (skipped)
+              </div>";
+    }
+    
     // Step 5: Insert sample data
     echo "<h4 class='mt-4 mb-3'><i class='fas fa-users me-2'></i>Step 5: Loading Sample Data</h4>";
     

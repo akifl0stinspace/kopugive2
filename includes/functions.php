@@ -59,9 +59,14 @@ function isLoggedIn() {
     return isset($_SESSION['user_id']);
 }
 
-// Check if user is admin
+// Check if user is super admin
+function isSuperAdmin() {
+    return isset($_SESSION['role']) && $_SESSION['role'] === 'super_admin';
+}
+
+// Check if user is admin (includes super admin)
 function isAdmin() {
-    return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+    return isset($_SESSION['role']) && in_array($_SESSION['role'], ['admin', 'super_admin'], true);
 }
 
 // Redirect function

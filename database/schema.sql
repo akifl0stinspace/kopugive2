@@ -5,14 +5,14 @@
 CREATE DATABASE IF NOT EXISTS kopugive CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE kopugive;
 
--- Users table (both admins and donors)
+-- Users table (admins, super admins, donors)
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     phone VARCHAR(20),
     password_hash VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'donor') DEFAULT 'donor',
+    role ENUM('super_admin', 'admin', 'donor') DEFAULT 'donor',
     profile_image VARCHAR(255),
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -108,9 +108,9 @@ CREATE TABLE settings (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Insert default admin user (password: admin123)
+-- Insert default super admin user (password: admin123)
 INSERT INTO users (full_name, email, phone, password_hash, role) VALUES
-('MUAFAKAT Admin', 'admin@mrsmkp.edu.my', '0123456789', '$2y$10$YJGwM7RCLDSqYC0LvJqyJuVG9QVvzHPFQ6dWzKxLm8HvmVGFZGONe', 'admin');
+('MUAFAKAT Admin', 'admin@mrsmkp.edu.my', '0123456789', '$2y$10$YJGwM7RCLDSqYC0LvJqyJuVG9QVvzHPFQ6dWzKxLm8HvmVGFZGONe', 'super_admin');
 
 -- Insert default settings
 INSERT INTO settings (setting_key, setting_value, description) VALUES

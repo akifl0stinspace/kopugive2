@@ -34,7 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     logActivity($db, $user['user_id'], 'User logged in', 'user', $user['user_id']);
                     
                     setFlashMessage('success', 'Welcome back, ' . $user['full_name'] . '!');
-                    redirect($user['role'] === 'admin' ? '../admin/dashboard.php' : '../donor/dashboard.php');
+                    // Admin and super admin both go to admin dashboard
+                    if (in_array($user['role'], ['admin', 'super_admin'], true)) {
+                        redirect('../admin/dashboard.php');
+                    } else {
+                        redirect('../donor/dashboard.php');
+                    }
                 } else {
                     $error = 'Your account has been deactivated. Please contact administrator.';
                 }
