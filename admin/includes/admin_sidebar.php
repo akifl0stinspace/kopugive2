@@ -35,6 +35,13 @@
                         <i class="fas fa-users"></i> Donors
                     </a>
                 </li>
+                <?php if (function_exists('isSuperAdmin') && isSuperAdmin()): ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'users.php' ? 'active' : '' ?>" href="users.php">
+                            <i class="fas fa-user-shield"></i> Manage Admins
+                        </a>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'reports.php' || basename($_SERVER['PHP_SELF']) == 'generate_report.php' ? 'active' : '' ?>" href="reports.php">
                         <i class="fas fa-file-alt"></i> Reports
