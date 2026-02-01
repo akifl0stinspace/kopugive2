@@ -41,12 +41,6 @@
                             <i class="fas fa-user-shield"></i> Manage Admins
                         </a>
                     </li>
-                <?php elseif (function_exists('isAdmin') && isAdmin()): ?>
-                    <li class="nav-item">
-                        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'users.php' ? 'active' : '' ?>" href="users.php">
-                            <i class="fas fa-user-shield"></i> View Admins
-                        </a>
-                    </li>
                 <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'reports.php' || basename($_SERVER['PHP_SELF']) == 'generate_report.php' ? 'active' : '' ?>" href="reports.php">

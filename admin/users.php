@@ -3,55 +3,52 @@ session_start();
 require_once '../config/config.php';
 require_once '../includes/functions.php';
 
-// Only admins can access this page
-if (!isLoggedIn() || !isAdmin()) {
-    redirect('../auth/login.php');
+// Only super admins can access this page
+if (!isLoggedIn() || !isSuperAdmin()) {
+    setFlashMessage('error', 'Access denied. Only Super Admins can manage admins.');
+    redirect('dashboard.php');
 }
 
 $db = (new Database())->getConnection();
 $error = '';
 $success = '';
 
-// Handle create admin form (only super admins can create admins)
+// Handle create admin form
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create_admin') {
-    if (!isSuperAdmin()) {
-        $error = 'Only Super Admins can create new admin accounts.';
+    $fullName = sanitize($_POST['full_name'] ?? '');
+    $email = sanitize($_POST['email'] ?? '');
+    $phone = sanitize($_POST['phone'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $confirmPassword = $_POST['confirm_password'] ?? '';
+
+    if (empty($fullName) || empty($email) || empty($password)) {
+        $error = 'Please fill in all required fields';
+    } elseif (!isValidEmail($email)) {
+        $error = 'Please enter a valid email address';
+    } elseif (strlen($password) < PASSWORD_MIN_LENGTH) {
+        $error = 'Password must be at least ' . PASSWORD_MIN_LENGTH . ' characters';
+    } elseif ($password !== $confirmPassword) {
+        $error = 'Passwords do not match';
     } else {
-        $fullName = sanitize($_POST['full_name'] ?? '');
-        $email = sanitize($_POST['email'] ?? '');
-        $phone = sanitize($_POST['phone'] ?? '');
-        $password = $_POST['password'] ?? '';
-        $confirmPassword = $_POST['confirm_password'] ?? '';
+        try {
+            // Check if email already exists
+            $stmt = $db->prepare("SELECT user_id FROM users WHERE email = ?");
+            $stmt->execute([$email]);
+            if ($stmt->fetch()) {
+                $error = 'Email already exists';
+            } else {
+                $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                $stmt = $db->prepare("INSERT INTO users (full_name, email, phone, password_hash, role, is_active) VALUES (?, ?, ?, ?, 'admin', 1)");
+                $stmt->execute([$fullName, $email, $phone, $passwordHash]);
 
-        if (empty($fullName) || empty($email) || empty($password)) {
-            $error = 'Please fill in all required fields';
-        } elseif (!isValidEmail($email)) {
-            $error = 'Please enter a valid email address';
-        } elseif (strlen($password) < PASSWORD_MIN_LENGTH) {
-            $error = 'Password must be at least ' . PASSWORD_MIN_LENGTH . ' characters';
-        } elseif ($password !== $confirmPassword) {
-            $error = 'Passwords do not match';
-        } else {
-            try {
-                // Check if email already exists
-                $stmt = $db->prepare("SELECT user_id FROM users WHERE email = ?");
-                $stmt->execute([$email]);
-                if ($stmt->fetch()) {
-                    $error = 'Email already exists';
-                } else {
-                    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                    $stmt = $db->prepare("INSERT INTO users (full_name, email, phone, password_hash, role, is_active) VALUES (?, ?, ?, ?, 'admin', 1)");
-                    $stmt->execute([$fullName, $email, $phone, $passwordHash]);
+                $newId = $db->lastInsertId();
+                logActivity($db, $_SESSION['user_id'], 'Created admin user', 'user', $newId);
 
-                    $newId = $db->lastInsertId();
-                    logActivity($db, $_SESSION['user_id'], 'Created admin user', 'user', $newId);
-
-                    $success = 'Admin account created successfully';
-                }
-            } catch (Exception $e) {
-                error_log('Create admin error: ' . $e->getMessage());
-                $error = 'An error occurred while creating admin.';
+                $success = 'Admin account created successfully';
             }
+        } catch (Exception $e) {
+            error_log('Create admin error: ' . $e->getMessage());
+            $error = 'An error occurred while creating admin.';
         }
     }
 }
@@ -99,7 +96,6 @@ $admins = $stmt->fetchAll();
         <?php endif; ?>
 
         <div class="row">
-            <?php if (isSuperAdmin()): ?>
             <div class="col-lg-5 mb-4">
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-white">
@@ -136,9 +132,8 @@ $admins = $stmt->fetchAll();
                     </div>
                 </div>
             </div>
-            <?php endif; ?>
 
-            <div class="col-lg-<?= isSuperAdmin() ? '7' : '12' ?>">
+            <div class="col-lg-7">
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-white">
                         <h5 class="mb-0"><i class="fas fa-users-cog me-2"></i>Existing Admins</h5>
