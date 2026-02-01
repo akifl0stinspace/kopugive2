@@ -3,9 +3,10 @@ session_start();
 require_once '../config/config.php';
 require_once '../includes/functions.php';
 
-// Only admins can access this page
-if (!isLoggedIn() || !isAdmin()) {
-    redirect('../auth/login.php');
+// Only super admins can access donor records
+if (!isLoggedIn() || !isSuperAdmin()) {
+    setFlashMessage('error', 'Access denied. Only Super Admins can view donor records.');
+    redirect('dashboard.php');
 }
 
 $db = (new Database())->getConnection();

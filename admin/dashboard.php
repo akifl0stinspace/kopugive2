@@ -70,8 +70,8 @@ $flashMessage = getFlashMessage();
 </head>
 <body>
     <?php include 'includes/admin_sidebar.php'; ?>
-    
-    <!-- Main Content -->
+            
+            <!-- Main Content -->
     <main class="col-md-10 ms-sm-auto px-md-4 py-4">
                 <!-- Header -->
                 <div class="d-flex justify-content-between align-items-center mb-4">

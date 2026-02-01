@@ -13,6 +13,7 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = sanitize($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
+    $loginType = $_POST['login_type'] ?? 'donor';
     
     if (empty($email) || empty($password)) {
         $error = 'Please fill in all fields';
@@ -24,7 +25,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = $stmt->fetch();
             
             if ($user && password_verify($password, $user['password_hash'])) {
-                if ($user['is_active']) {
+                // Verify role matches login type
+                $isAdminLogin = ($loginType === 'admin');
+                $isAdminRole = in_array($user['role'], ['admin', 'super_admin'], true);
+                
+                if ($isAdminLogin && !$isAdminRole) {
+                    $error = 'This account is not an admin account. Please select "Donor" to login.';
+                } elseif (!$isAdminLogin && $isAdminRole) {
+                    $error = 'This is an admin account. Please select "Admin" to login.';
+                } elseif (!$user['is_active']) {
+                    $error = 'Your account has been deactivated. Please contact administrator.';
+                } else {
+                    // Login successful
                     $_SESSION['user_id'] = $user['user_id'];
                     $_SESSION['full_name'] = $user['full_name'];
                     $_SESSION['email'] = $user['email'];
@@ -40,8 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     } else {
                         redirect('../donor/dashboard.php');
                     }
-                } else {
-                    $error = 'Your account has been deactivated. Please contact administrator.';
                 }
             } else {
                 $error = 'Invalid email or password';
@@ -112,6 +122,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 
                                 <form method="POST" action="">
                                     <div class="mb-3">
+                                        <label for="role" class="form-label">Login As</label>
+                                        <div class="btn-group w-100" role="group">
+                                            <input type="radio" class="btn-check" name="login_type" id="login_admin" value="admin" checked>
+                                            <label class="btn btn-outline-primary" for="login_admin">
+                                                <i class="fas fa-user-shield me-1"></i>Admin
+                                            </label>
+                                            
+                                            <input type="radio" class="btn-check" name="login_type" id="login_donor" value="donor">
+                                            <label class="btn btn-outline-primary" for="login_donor">
+                                                <i class="fas fa-hand-holding-heart me-1"></i>Donor
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
                                         <label for="email" class="form-label">Email Address</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
@@ -150,9 +175,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 
                                 <div class="mt-4 p-3 bg-light rounded">
                                     <small class="text-muted">
-                                        <strong>Demo Accounts:</strong><br>
-                                        Admin: admin@mrsmkp.edu.my / admin123<br>
-                                        Donor: ahmad@example.com / admin123
+                                        <strong>Quick Login:</strong><br>
+                                        <span id="demo-superadmin" class="d-block mb-1" style="cursor: pointer;">
+                                            <i class="fas fa-crown text-danger"></i> <strong>Super Admin:</strong> admin@mrsmkp.edu.my / admin123
+                                        </span>
+                                        <span id="demo-admin" class="d-block mb-1" style="cursor: pointer;">
+                                            <i class="fas fa-user-shield text-primary"></i> <strong>Admin:</strong> testadmin@mrsmkp.edu.my / admin123
+                                        </span>
+                                        <span id="demo-donor" class="d-block" style="cursor: pointer;">
+                                            <i class="fas fa-hand-holding-heart text-success"></i> <strong>Donor:</strong> ahmad@example.com / admin123
+                                        </span>
                                     </small>
                                 </div>
                             </div>
@@ -164,6 +196,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Auto-fill credentials when clicking demo accounts
+        document.getElementById('demo-superadmin').addEventListener('click', function() {
+            document.getElementById('email').value = 'admin@mrsmkp.edu.my';
+            document.getElementById('password').value = 'admin123';
+            document.getElementById('login_admin').checked = true;
+        });
+        
+        document.getElementById('demo-admin').addEventListener('click', function() {
+            document.getElementById('email').value = 'testadmin@mrsmkp.edu.my';
+            document.getElementById('password').value = 'admin123';
+            document.getElementById('login_admin').checked = true;
+        });
+        
+        document.getElementById('demo-donor').addEventListener('click', function() {
+            document.getElementById('email').value = 'ahmad@example.com';
+            document.getElementById('password').value = 'admin123';
+            document.getElementById('login_donor').checked = true;
+        });
+    </script>
 </body>
 </html>
 

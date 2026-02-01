@@ -9,3 +9,4 @@ SET role = 'super_admin'
 WHERE email = 'admin@mrsmkp.edu.my';
 
 
+
