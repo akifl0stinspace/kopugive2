@@ -219,20 +219,35 @@ $flashMessage = getFlashMessage();
                             
                             <div class="mb-3">
                                 <label for="current_password" class="form-label">Current Password *</label>
-                                <input type="password" class="form-control" id="current_password" name="current_password" required>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="current_password" name="current_password" required>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('current_password', this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
                             </div>
                             
                             <div class="mb-3">
                                 <label for="new_password" class="form-label">New Password *</label>
-                                <input type="password" class="form-control" id="new_password" name="new_password" 
-                                       minlength="6" required>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="new_password" name="new_password" 
+                                           minlength="6" required>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('new_password', this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
                                 <small class="text-muted">Minimum 6 characters</small>
                             </div>
                             
                             <div class="mb-3">
                                 <label for="confirm_password" class="form-label">Confirm New Password *</label>
-                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" 
-                                       minlength="6" required>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" 
+                                           minlength="6" required>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirm_password', this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
                             </div>
                             
                             <button type="submit" class="btn btn-warning w-100">
@@ -268,6 +283,23 @@ $flashMessage = getFlashMessage();
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle password visibility
+        function togglePassword(fieldId, button) {
+            const field = document.getElementById(fieldId);
+            const icon = button.querySelector('i');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+    </script>
 </body>
 </html>
 

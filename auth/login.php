@@ -150,6 +150,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                             <input type="password" class="form-control" id="password" name="password" required>
+                                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password', this)">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
                                         </div>
                                     </div>
                                     
@@ -197,6 +200,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Toggle password visibility
+        function togglePassword(fieldId, button) {
+            const field = document.getElementById(fieldId);
+            const icon = button.querySelector('i');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+        
         // Auto-fill credentials when clicking demo accounts
         document.getElementById('demo-superadmin').addEventListener('click', function() {
             document.getElementById('email').value = 'admin@mrsmkp.edu.my';
