@@ -317,7 +317,7 @@ $flashMessage = getFlashMessage();
                         <p class="mb-2"><strong>Target Amount:</strong> <?= formatCurrency($campaignDetails['target_amount']) ?></p>
                         <p class="mb-2"><strong>Status:</strong> 
                             <?php
-                            $status = $campaignDetails['campaign_status'];
+                            $status = $campaignDetails['status'] ?? 'draft';
                             $statusDisplay = [
                                 'active' => ['text' => 'Active', 'color' => 'success'],
                                 'completed' => ['text' => 'Ended', 'color' => 'info'],
@@ -331,8 +331,8 @@ $flashMessage = getFlashMessage();
                     </div>
                     <div class="col-md-4">
                         <div class="text-center">
-                            <?php if ($campaignDetails['image_url']): ?>
-                                <img src="../<?= htmlspecialchars($campaignDetails['image_url']) ?>" 
+                            <?php if (!empty($campaignDetails['banner_image'])): ?>
+                                <img src="../<?= htmlspecialchars($campaignDetails['banner_image']) ?>" 
                                      alt="Campaign" class="img-fluid rounded" style="max-height: 150px;">
                             <?php endif; ?>
                         </div>
