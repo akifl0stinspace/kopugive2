@@ -339,7 +339,7 @@ function processReceiptForDonation($donationId, $db) {
     try {
         // Get donation details
         $stmt = $db->prepare("
-            SELECT d.*, c.campaign_name, c.campaign_description
+            SELECT d.*, c.campaign_name, c.description as campaign_description
             FROM donations d
             LEFT JOIN campaigns c ON d.campaign_id = c.campaign_id
             WHERE d.donation_id = ?
