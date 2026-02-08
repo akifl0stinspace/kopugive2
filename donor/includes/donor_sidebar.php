@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <!-- Donor Sidebar -->
-        <nav class="col-md-2 d-md-block sidebar text-white p-3 d-flex flex-column" style="height: 100vh; overflow-y: auto;">
+        <nav class="col-md-2 d-md-block sidebar text-white p-3" style="height: 100vh; display: flex; flex-direction: column; position: fixed; overflow-y: auto;">
             <div class="text-center mb-4">
                 <h4><i class="fas fa-hand-holding-heart"></i> KopuGive</h4>
                 <small>Donor Panel</small>
@@ -9,7 +9,7 @@
             
             <hr class="text-white">
             
-            <ul class="nav flex-column flex-grow-1">
+            <ul class="nav flex-column" style="flex-grow: 1;">
                 <li class="nav-item">
                     <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : '' ?>" href="dashboard.php">
                         <i class="fas fa-chart-line me-2"></i> Dashboard
@@ -34,13 +34,13 @@
             
             <hr class="text-white">
             
-            <div class="mt-2">
+            <div style="margin-top: auto;">
                 <div class="mb-2">
                     <i class="fas fa-user-circle me-2"></i>
                     <small><?= htmlspecialchars($_SESSION['full_name']) ?></small>
                 </div>
                 <a href="../auth/logout.php" class="btn btn-outline-light btn-sm w-100">
-                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                    <i class="fas fa-sign-out-alt me-2"></i> Logout
                 </a>
             </div>
         </nav>
