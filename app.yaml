@@ -1,0 +1,28 @@
+name: kopugive
+region: sgp
+services:
+- name: web
+  github:
+    repo: akifl0stinspace/kopugive2
+    branch: main
+    deploy_on_push: true
+  routes:
+  - path: /
+  envs:
+  - key: DATABASE_URL
+    scope: RUN_AND_BUILD_TIME
+    type: SECRET
+  - key: APP_ENV
+    value: production
+  http_port: 8080
+  build_command: |
+    # No build needed for PHP
+  run_command: |
+    # Use built-in PHP server
+    heroku-php-apache2
+databases:
+- name: db
+  engine: MYSQL
+  version: "8"
+  production: false
+
