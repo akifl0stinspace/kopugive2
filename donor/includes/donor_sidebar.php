@@ -39,7 +39,7 @@
                     <i class="fas fa-user-circle me-2"></i>
                     <small><?= htmlspecialchars($_SESSION['full_name']) ?></small>
                 </div>
-                <a href="../auth/logout.php" class="btn btn-outline-light btn-sm w-100">
+                <a href="../auth/logout.php" class="btn btn-outline-primary btn-sm w-100">
                     <i class="fas fa-sign-out-alt me-2"></i>Logout
                 </a>
             </div>
