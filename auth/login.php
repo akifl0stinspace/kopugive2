@@ -183,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <i class="fas fa-crown text-danger"></i> <strong>Super Admin:</strong> admin@mrsmkp.edu.my / admin123
                                         </span>
                                         <span id="demo-admin" class="d-block mb-1" style="cursor: pointer;">
-                                            <i class="fas fa-user-shield text-primary"></i> <strong>Admin:</strong> testadmin@mrsmkp.edu.my / admin123
+                                            <i class="fas fa-user-shield text-primary"></i> <strong>Admin:</strong> admin1@mrsmkp.edu.my / admin123
                                         </span>
                                         <span id="demo-donor" class="d-block" style="cursor: pointer;">
                                             <i class="fas fa-hand-holding-heart text-success"></i> <strong>Donor:</strong> ahmad@example.com / admin123
